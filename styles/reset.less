@@ -1,0 +1,32 @@
+@import (inline) "normalize.css/normalize.css";
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea {
+  border: 1px solid black;
+  background: white;
+  outline: none;
+
+  .appearance(none);
+  .border-radius(0);
+
+  &::-webkit-input-placeholder {
+    color: #888;
+  }
+
+  // Firefox 18-
+  &:-moz-placeholder {
+     color: #888;
+  }
+
+  // Firefox 19+
+  &::-moz-placeholder {
+     color: #888;
+  }
+
+  &:-ms-input-placeholder {
+     color: #888;
+  }
+}

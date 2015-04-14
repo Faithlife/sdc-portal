@@ -1,0 +1,98 @@
+#!/usr/bin/env node
+'use strict';
+
+var cluster = require('cluster');
+var fs = require('fs');
+var path = require('path');
+var config = require('../lib/config');
+var recentCrashes = 0;
+var pidFile = path.resolve(__dirname, '..', 'data', 'cluster.pid');
+var timeoutIds = [];
+var intervalIds = [];
+
+// To start, we need to verify the state of the cluster to prevent split-brain
+// syndrome. Even if the pid file exists, however, we need to be sure the
+// process is still alive.
+if (fs.existsSync(pidFile)) {
+  try {
+    process.kill(fs.readFileSync(pidFile), 0);
+  } catch (e) {
+    if (e.code === 'ESRCH') {
+      // If we fail to kill the process, remove the PID file and move on.
+      fs.unlinkSync(pidFile);
+    }
+  }
+}
+
+// If any of the above checks have failed, the pid file should still exist, and
+// we abort starting the new cluster.
+if (fs.existsSync(pidFile)) {
+  console.error('Master already running as %s. Bailing...', fs.readFileSync(pidFile).toString().trim());
+  process.exit(1);
+}
+
+console.log('Master %s starting...', process.pid);
+
+process.on('exit', function () {
+  console.log('Master %s stopped.', process.pid);
+});
+
+// All workers run `server`.
+cluster.setupMaster({
+  exec: require.resolve('./server')
+});
+
+// As the master, run the configured number of instances.
+for (var i = 0; i < config.cluster.instances; i++) {
+  cluster.fork(require('../data/env/' + config.env + '.json'));
+}
+
+cluster.on('fork', function (worker) {
+  console.log('Worker %s started.', worker.process.pid);
+});
+
+// When any of those instances fail, restart them after a small delay. That
+// delay gets longer the more crashes have occurred recently.
+cluster.on('exit', function (worker, code, signal) {
+  if (worker.suicide) {
+    console.log('Worker %s stopped.', worker.process.pid);
+    return;
+  }
+
+  var delay = Math.pow(2, recentCrashes++) * 100;
+
+  console.warn('Worker %s left with %s. Starting a new worker in %s ms...', worker.process.pid, signal || code, delay);
+
+  timeoutIds.push(setTimeout(cluster.fork, delay));
+});
+
+// This interval keeps a natural limit on the maximum delay at 3200 ms, as well
+// as helping lower that delay to its minimum over time.
+intervalIds.push(setInterval(function () {
+  if (recentCrashes) {
+    recentCrashes--;
+  }
+}, 1600));
+
+// SIGTERM and SIGINT are used to gracefully shut down the cluster. This should
+// result in unbinding the listening port, resolving existing requests, and
+// exiting the process.
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+function shutdown() {
+  console.log('Master %s shutting down...', process.pid);
+
+  intervalIds.forEach(clearInterval);
+  timeoutIds.forEach(clearTimeout);
+
+  cluster.disconnect();
+}
+
+process.on('exit', function () {
+  fs.unlinkSync(pidFile);
+});
+
+// Finally, write the pid in case we're being daemonized. This indicates to
+// watchers that we've finished bootstrapping the cluster, now ready to receive
+// control signals.
+fs.appendFileSync(pidFile, process.pid + '\n');

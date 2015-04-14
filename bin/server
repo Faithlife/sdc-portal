@@ -1,0 +1,94 @@
+#!/usr/bin/env node
+'use strict';
+
+// Transparently allow require-ing `component.jsx`.
+require('node-jsx').install({ extension: '.jsx' });
+
+/*!
+ * `bin/server` contains all server-specific code, run immediately only on the
+ * server.
+ *
+ * Our server-specific concerns are:
+ * - Serving static and compiled files.
+ * - Server-side routing and rendering initial content.
+ * - Bad or old links (404, 301, etc.)
+ */
+var path = require('path');
+var express = require('express');
+var littlest = require('littlest-isomorph');
+var morgan = require('morgan');
+var FlickrClient = require('../lib/clients/flickr');
+var config = require('../lib/config');
+var context = require('../lib/context');
+var logger = require('../lib/logger');
+var app = express();
+var navigator = littlest.ExpressNavigator.createNavigator({
+  renderer: littlest.StaticRenderer.createRenderer({
+    templatePath: path.resolve(__dirname, '..', 'public', 'index.html')
+  }),
+  context: context
+});
+
+// Log the top-level configuration for debugging.
+console.log('Config: %j', config);
+
+// Mount a client on the parent Context. We'll attach a per-user client in
+// middleware, below.
+context.flickr = FlickrClient.createClient(config.client.flickr.upstream);
+
+// Global error handler
+app.use(navigator.errorHandler());
+
+// Load-balancer-friendly up check
+app.get('/up', function (req, res) {
+  res.status(204).send();
+});
+
+// Install a logger that sends formatted messages to STDOUT.
+app.use(morgan(config.logger.format, { stream: logger.asStream('info') }));
+
+// File middleware for static files. Should fall through on _all_
+// unknown routes.
+app.use(express.static(path.resolve(__dirname, '..', 'public'), {
+  index: false,
+  redirect: false
+}));
+
+// Since our client provides a subapp to proxy requests, we include that subapp
+// here. This is optional, but will simplify CORS considerations, for example.
+// If proxying is undesirable, remove this middleware and use a shared `config`
+// for all client-side and server-side clients.
+app.use(config.client.flickr.proxy.rootUrl, context.flickr.subapp());
+
+// Middleware to isolate a child Context for each request. Immediately after
+// this middleware should come any customization to request-based Contexts,
+// while global Context changes should occur within this script (presumably)
+// not in middleware, since those changes should be done independent of
+// requests.
+app.use(navigator.childContextHandler());
+
+// Now that there's a child Context, we need to re-attach any user-specific
+// attachments. In this case, it's just our client.
+app.use(function (req, res, next) {
+  req.context.flickr = context.flickr.getChild({});
+  next();
+});
+
+// If the request URL is valid, this renders the top-level component, the
+// Application, based on the current Router configuration. Otherwise, a 404
+// is generated.
+app.use(navigator.requestHandler());
+
+// Finally, listen for requests!
+app.listen(config.port, config.hostname)
+  .on('listening', function () {
+    logger.log('Server %s listening at %s:%s...', process.pid, this.address().address, this.address().port);
+  });
+
+// The `disconnect` event is used by `cluster`, the master process, to signal
+// a graceful shutdown. Node core will take care of managing the currently-open
+// sockets, both open and bound, which should be our only open handles. At
+// some point after this, the process should exit gracefully on its own.
+process.on('disconnect', function () {
+  logger.log('Server %s shutting down...', process.pid);
+});
