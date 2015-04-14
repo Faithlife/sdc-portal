@@ -10,6 +10,7 @@
     "logs": "touch logs && tail -F logs"
   },
   "dependencies": {
+    "body-parser": "~1.12.2",
     "bunyan": "~1.2.3",
     "debug": "~2.1.0",
     "express": "~4.9.3",
