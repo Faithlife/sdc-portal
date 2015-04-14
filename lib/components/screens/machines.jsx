@@ -1,36 +1,24 @@
+var littlest = require('littlest-isomorph');
 var React = require('react');
 var superagent = require('superagent');
 var App = require('../app.jsx');
 var Machine = require('../machine.jsx');
 
 var MachinesPage = React.createClass({
-  getInitialState: function () {
-    return ({
-      machines: []
-    });
+  mixins: [littlest.Mixin],
+  mappings: {
+    machines: 'machine:machines'
   },
-
   componentDidMount: function () {
-    var self = this;
-    var user = self.props.route.params.userId;
-
-    self.setStateIfMounted = function(machines) {
-      if (self.isMounted()) {
-        self.setState({
-          machines: machines
-        });
-      }
-    };
-
-    superagent
-      .get('/api/machines?user=' + user)
-      .end(function (error, response) {
-        self.setStateIfMounted(response.body.machines);
-      });
+    this.context.performAction('machine:machines:get', { user: this.props.route.params.userId });
   },
-
   render: function () {
     var self = this;
+
+    if (!self.state.machines) {
+      return null;
+    }
+
     var machines = this.state.machines.map(function (machine) {
       return <Machine key={machine.id} machine={machine} user={self.props.route.params.userId}/>
     });
