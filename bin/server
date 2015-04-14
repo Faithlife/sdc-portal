@@ -21,7 +21,8 @@ var PortalClient = require('../lib/clients/portal');
 var config = require('../lib/config');
 var context = require('../lib/context');
 var logger = require('../lib/logger');
-var apiSubapp = require('../lib/server/api');
+var AuthProvider = require('../lib/clients/auth');
+var sdcportalApi = require('../lib/server/api');
 var app = express();
 var navigator = littlest.ExpressNavigator.createNavigator({
   renderer: littlest.StaticRenderer.createRenderer({
@@ -63,6 +64,9 @@ app.use(express.static(path.resolve(__dirname, '..', 'public'), {
   redirect: false
 }));
 
+var apiSubapp = sdcportalApi.generateSubapp({
+  authProvider: new AuthProvider()
+});
 app.use('/api', apiSubapp);
 
 // Since our client provides a subapp to proxy requests, we include that subapp
