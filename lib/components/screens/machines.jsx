@@ -1,6 +1,5 @@
 var littlest = require('littlest-isomorph');
 var React = require('react');
-var superagent = require('superagent');
 var App = require('../app.jsx');
 var Machine = require('../machine.jsx');
 
@@ -10,16 +9,13 @@ var MachinesPage = React.createClass({
     machines: 'machine:machines'
   },
   componentDidMount: function () {
-    this.context.performAction('machine:machines:get', { user: this.props.route.params.userId });
+    this.context.performAction('machine:machines:get', {
+      userId: this.props.route.params.userId
+    });
   },
   render: function () {
     var self = this;
-
-    if (!self.state.machines) {
-      return null;
-    }
-
-    var machines = this.state.machines.map(function (machine) {
+    var machines = self.state.machines.map(function (machine) {
       return <Machine key={machine.id} machine={machine} user={self.props.route.params.userId}/>
     });
     return (

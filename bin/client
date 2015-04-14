@@ -7,6 +7,7 @@
  */
 var littlest = require('littlest-isomorph');
 var React = require('react');
+var PortalClient = require('../lib/clients/portal');
 var config = require('../lib/config');
 var context = require('../lib/context');
 var logger = require('../lib/logger');
@@ -14,7 +15,7 @@ var logger = require('../lib/logger');
 // Attach a singleton client instance to the Context. All Actions will use
 // this client from the browser. As such, all requests will be proxied through
 // our server instance.
-// context.flickr = FlickrClient.createClient(config.client.flickr.proxy);
+context.client = new PortalClient(config.client.portal.proxy);
 
 // Install the client.
 littlest.DomNavigator
