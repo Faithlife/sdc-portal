@@ -17,10 +17,10 @@ var path = require('path');
 var express = require('express');
 var littlest = require('littlest-isomorph');
 var morgan = require('morgan');
-var FlickrClient = require('../lib/clients/flickr');
 var config = require('../lib/config');
 var context = require('../lib/context');
 var logger = require('../lib/logger');
+var apiSubapp = require('../lib/server/api');
 var app = express();
 var navigator = littlest.ExpressNavigator.createNavigator({
   renderer: littlest.StaticRenderer.createRenderer({
@@ -32,9 +32,10 @@ var navigator = littlest.ExpressNavigator.createNavigator({
 // Log the top-level configuration for debugging.
 console.log('Config: %j', config);
 
-// Mount a client on the parent Context. We'll attach a per-user client in
-// middleware, below.
-context.flickr = FlickrClient.createClient(config.client.flickr.upstream);
+// Allow connecting to self-signed environments.
+if (config.env === 'development') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+}
 
 // Global error handler
 app.use(navigator.errorHandler());
@@ -54,11 +55,13 @@ app.use(express.static(path.resolve(__dirname, '..', 'public'), {
   redirect: false
 }));
 
+app.use('/api', apiSubapp);
+
 // Since our client provides a subapp to proxy requests, we include that subapp
 // here. This is optional, but will simplify CORS considerations, for example.
 // If proxying is undesirable, remove this middleware and use a shared `config`
 // for all client-side and server-side clients.
-app.use(config.client.flickr.proxy.rootUrl, context.flickr.subapp());
+// app.use(config.client.flickr.proxy.rootUrl, context.flickr.subapp());
 
 // Middleware to isolate a child Context for each request. Immediately after
 // this middleware should come any customization to request-based Contexts,
@@ -70,7 +73,6 @@ app.use(navigator.childContextHandler());
 // Now that there's a child Context, we need to re-attach any user-specific
 // attachments. In this case, it's just our client.
 app.use(function (req, res, next) {
-  req.context.flickr = context.flickr.getChild({});
   next();
 });
 

@@ -1,23 +1,15 @@
-var littlest = require('littlest-isomorph');
 var React = require('react');
 var App = require('../app.jsx');
-var Photo = require('../photo.jsx');
+var UserList = require('../userlist.jsx');
 
-var Home = React.createClass({
-  mixins: [littlest.Mixin],
-  mappings: {
-    photos: 'photos:interesting'
-  },
+var HomePage = React.createClass({
   render: function () {
     return (
       <App>
-        <h1>Today's Interestingness</h1>
-        {this.state.photos.map(function (photo) {
-          return <Photo photo={photo} key={photo.id} />
-        })}
+        <UserList />
       </App>
     );
   }
 });
 
-module.exports = Home;
+module.exports = HomePage;
