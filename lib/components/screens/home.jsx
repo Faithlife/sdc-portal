@@ -27,7 +27,8 @@ var HomePage = React.createClass({
     }
 
     this.context.performAction('machine:machines:get', {
-      userId: user
+      dataCenter: dataCenter,
+      userId: user,
     });
   },
   render: function () {
