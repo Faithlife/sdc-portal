@@ -6,15 +6,13 @@ var App = React.createClass({
   mixins: [littlest.Mixin],
   mappings: {
     allUsers: 'user:users',
-    // allDataCenters: 'datacenter:all',
+    allDataCenters: 'dataCenter:dataCenters',
     activeUser: 'ui:activeUser',
     activeDataCenter: 'ui:activeDataCenter',
     user: 'user:user'
   },
-  getInitialState: function () {
-    return {
-      allDataCenters: ['bli', 'sea', 'us-west-1']
-    };
+  componentDidMount: function () {
+    this.context.performAction('dataCenter:dataCenters:get');
   },
   performSelectAction: function (key) {
     var self = this;
