@@ -1,6 +1,5 @@
 var littlest = require('littlest-isomorph');
 var React = require('react');
-var MachineActionsDropdown = require('./machine-actions-dropdown.jsx');
 
 var Machine = React.createClass({
   mixins: [littlest.Mixin],
@@ -33,14 +32,24 @@ var Machine = React.createClass({
       dataCenter: this.props.machine.dataCenter
     });
   },
+  renderStateIcon: function (state) {
+    if (state === 'running' || state === 'ready') {
+      return <i className="icon-ok"></i>;
+    }
+
+    return <i className="icon-attention-alt"></i>
+  },
   render: function () {
     return (
-      <div className="row machineRow">
-        <div className="col-sm-1">{this.state.machine.name}</div>
-        <div className="col-sm-1">{this.state.machine.state}</div>
-        <div className="col-sm-4">{this.state.machine.computeNode}</div>
-        <div className="col-sm-3">{this.state.machine.ips}</div>
-        <div className="col-sm-1"><MachineActionsDropdown machine={this.state.machine} handleReboot={this.handleReboot} handleStart={this.handleStart}/></div>
+      <div className={'machine' + (this.props.className ? ' ' + this.props.className : '')}>
+        <div className="machine__name">{this.state.machine.name}</div>
+        <div className={'machine__state machine__state--' + this.state.machine.state} title={this.state.machine.state}>{this.renderStateIcon(this.state.machine.state)} {this.state.machine.state}</div>
+        <div className="machine__meta">{this.state.machine.computeNode}</div>
+        <div className="machine__meta">{this.state.machine.ips}</div>
+        <div className="machine__actions">
+          <button className="machine__action" tabIndex="-1" onClick={this.handleReboot}><i className="icon-ccw"></i> Reboot</button>
+          <button className="machine__action" tabIndex="-1" onClick={this.handleStart}><i className="icon-off"></i> Start</button>
+        </div>
       </div>
     );
   }

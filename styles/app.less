@@ -3,13 +3,295 @@
 }
 
 html, body {
+  background: @grey-2;
+  color: @white;
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   height: 100%;
+  overflow: hidden;
+}
+
+a {
+  color: @blue-4;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button {
+  background: @blue-4;
+  border: 0;
+  color: @white;
+
+  &:hover {
+    background: @blue-5;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+
+  &__selected {
+    background: transparent;
+    border: 0;
+    height: 100%;
+    outline: 0;
+    width: 100%;
+  }
+
+  &__options {
+    background: @grey-6;
+    color: @black;
+    display: none;
+    left: 0;
+    min-width: 100%;
+    position: absolute;
+    top: 100%;
+    z-index: @dropdown-zindex;
+
+    &--open {
+      display: block;
+    }
+  }
+
+  &__option {
+    border: 0;
+    outline: 0;
+    padding: 0 16px;
+    text-align: left;
+    min-width: 100%;
+  }
 }
 
 .app {
+  height: 100%;
+
   &__header {
+    background: @header-color;
+    color: @white;
+    height: @header-height;
+  }
+
+  &__sidebar {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    top: @header-height + 8px;
+    width: @sidebar-width;
   }
 
   &__content {
+    .border-radius(4px 4px 0 0);
+    bottom: 0;
+    color: @grey-1;
+    left: @sidebar-width;
+    overflow-y: auto;
+    position: fixed;
+    right: 24px;
+    top: @header-height + 8px;
+
+    & > .row {
+      background: @grey-7;
+      min-height: 100%;
+      padding: 0 16px 0;
+    }
+  }
+}
+
+.header {
+  &__badge {
+    color: inherit;
+    display: inline-block;
+    height: @header-height;
+    position: relative;
+    width: @sidebar-width + 24px;
+
+    &__brand {
+      color: @green-4;
+      left: 16px;
+      position: absolute;
+      top: 8px;
+    }
+
+    &__name {
+      font-size: 18px;
+      left: 28px;
+      position: absolute;
+      top: 20px;
+    }
+  }
+
+  &__item {
+    background: @grey-2;
+    color: @white;
+    display: inline-block;
+    font-size: 18px;
+    height: @header-height;
+    line-height: @header-height;
+    padding: 0 16px;
+    vertical-align: top;
+
+    &:hover {
+      background: @grey-3;
+      text-decoration: none;
+    }
+
+    &--blue {
+      background: @blue-4;
+
+      &:hover {
+        background: @blue-5;
+      }
+    }
+
+    &--green {
+      background: @green-4;
+
+      &:hover {
+        background: @green-5;
+      }
+    }
+
+    &--red {
+      background: @red-4;
+
+      &:hover {
+        background: @red-5;
+      }
+    }
+  }
+}
+
+.sidebar {
+  &__header {
+    font-size: 1em;
+    padding: 8px;
+    text-transform: uppercase;
+  }
+
+  &__item {
+    color: @grey-7;
+    display: block;
+    padding: 8px 16px;
+    width: 100%;
+
+    &:hover {
+      color: @green-3;
+      text-decoration: none;
+    }
+
+    &--active {
+      background: @grey-7;
+      color: @black;
+    }
+  }
+}
+
+.machine {
+  background: @white;
+  .border-radius(2px);
+  .box-shadow(0px 1px 1px @grey-4);
+  position: relative;
+
+  &__name {
+    background: @grey-2;
+    .border-radius(2px 2px 0 0);
+    color: @white;
+    font-size: 16px;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 8px;
+  }
+
+  &__state {
+    .border-radius(0 2px 0 0);
+    cursor: default;
+    height: 32px;
+    line-height: 32px;
+    overflow-x: hidden;
+    padding: 0 8px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 32px;
+
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+    &:hover {
+      width: 40%;
+    }
+
+    &--stopped {
+      background: @red-4;
+      color: @white;
+    }
+
+    &--stopping {
+      background: @yellow-4;
+      color: @white;
+    }
+
+    &--ready {
+      background: @green-4;
+      color: @white;
+    }
+
+    &--running {
+      background: @green-4;
+      color: @white;
+    }
+  }
+
+  &__meta {
+    color: @grey-1;
+    padding: 8px;
+  }
+
+  &__actions {
+    // background: @grey-6;
+    height: 32px;
+    text-align: right;
+
+    li {
+      display: inline-block;
+    }
+  }
+
+  &__action {
+    background: @blue-4;
+    color: @white;
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 8px;
+
+    &:hover {
+      background: @blue-5;
+    }
+
+    &:first-child {
+      .border-radius(2px 0 0 0);
+    }
+
+    &:last-child {
+      .border-radius(0 0 2px 0);
+    }
   }
 }

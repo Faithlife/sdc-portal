@@ -1,0 +1,30 @@
+.container {
+  padding: 0 16px;
+}
+
+.row {
+  .clearfix();
+  margin: 0 -16px;
+
+  &__col {
+    display: inline-block;
+    float: left;
+    padding: 16px;
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+
+    @media (min-width: 800px) {
+      .generate-column-rules(12, width);
+      .generate-column-rules(12, left, push-);
+      .generate-column-rules(12, right, pull-);
+    }
+  }
+}
+
+.generate-column-rules(@count, @rule, @prefix: ~'', @index: 1) when (@index =< @count) {
+  &--@{prefix}@{index} {
+    @{rule}: (@index * 100% / @count);
+  }
+  .generate-column-rules(@count, @rule, @prefix, (@index + 1));
+}
