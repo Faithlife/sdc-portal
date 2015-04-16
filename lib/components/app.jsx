@@ -11,8 +11,9 @@ var App = React.createClass({
     activeDataCenter: 'ui:activeDataCenter',
     user: 'user:user'
   },
-  componentDidMount: function () {
+  componentWillMount: function () {
     this.context.performAction('dataCenter:dataCenters:get');
+    this.context.performAction('user:users');
   },
   performSelectAction: function (key) {
     var self = this;
