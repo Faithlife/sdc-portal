@@ -8,7 +8,8 @@ var App = React.createClass({
     allUsers: 'user:users',
     // allDataCenters: 'datacenter:all',
     activeUser: 'ui:activeUser',
-    activeDataCenter: 'ui:activeDataCenter'
+    activeDataCenter: 'ui:activeDataCenter',
+    user: 'user:user'
   },
   getInitialState: function () {
     return {
@@ -22,35 +23,32 @@ var App = React.createClass({
       self.context.performAction('ui:' + key + ':select', value);
     }
   },
+  componentDidMount: function () {
+    this.context.performAction('user:getme');
+  },
   renderHeader: function () {
-    var signIn = <li><a href="/auth/signin">Sign in</a></li>;
-    if (this.props.userId !== -1 && this.props.email !== '') {
-      signIn = <li><p className="navbar-text">Signed in as {this.props.email}</p></li>
+    var signIn = <li><a href={this.context.getRouteUrl('signin')}>Sign in</a></li>;
+    if (this.state.user && this.state.user.id !== -1 && this.state.user.alias !== '') {
+      signIn = <li><p className="navbar-text">Signed in as {this.state.user.alias}</p></li>
     }
     return (
-      <nav className="navbar navbar-default" role="navigation">
-        <div className="container-fluid">
-          <a className="navbar-brand" href={this.context.getRouteUrl('home')}>SDCPortal</a>
-          <ul className="nav navbar-nav navbar-right">
-            {signIn}
-          </ul>
-        </div>
-      </nav>
+      <ul className="nav navbar-nav navbar-right">
+        {signIn}
+      </ul>
     );
   },
   render: function () {
     return (
       <div className="app">
         <div className="app__header">
-          <div className="container">
-            <div className="row">
-              <a className="header__badge" href={this.context.getRouteUrl('home')}>
-                <div className="header__badge__brand">SDC</div>
-                <div className="header__badge__name">Developer Portal</div>
-              </a>
-              <Dropdown className="header__item header__item--blue" options={this.state.allDataCenters} value={this.state.activeDataCenter} onChange={this.performSelectAction('activeDataCenter')}></Dropdown>
-              <Dropdown className="header__item header__item--blue" options={this.state.allUsers} value={this.state.activeUser} onChange={this.performSelectAction('activeUser')}></Dropdown>
-            </div>
+          <a className="header__badge" href={this.context.getRouteUrl('home')}>
+            <div className="header__badge__brand">SDC</div>
+            <div className="header__badge__name">Developer Portal</div>
+          </a>
+          <Dropdown className="header__item header__item--blue" options={this.state.allDataCenters} value={this.state.activeDataCenter} onChange={this.performSelectAction('activeDataCenter')}></Dropdown>
+          <Dropdown className="header__item header__item--blue" options={this.state.allUsers} value={this.state.activeUser} onChange={this.performSelectAction('activeUser')}></Dropdown>
+          <div className="header__item">
+            {this.renderHeader()}
           </div>
         </div>
         <div className="app__sidebar sidebar">
