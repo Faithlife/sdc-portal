@@ -30,3 +30,4 @@ public/*.bundle.map
 
 # LESS output
 public/bundle.css
+.DS_Store
