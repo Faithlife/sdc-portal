@@ -85,7 +85,9 @@ app.use(navigator.childContextHandler());
 // Now that there's a child Context, we need to re-attach any user-specific
 // attachments. In this case, it's just our client.
 app.use(function (req, res, next) {
-  req.context.client = context.client.getChild({});
+  req.context.client = context.client.getChild({
+    headers: req.headers
+  });
 
   next();
 });
