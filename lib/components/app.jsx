@@ -25,15 +25,19 @@ var App = React.createClass({
   componentDidMount: function () {
     this.context.performAction('user:getme');
   },
-  renderHeader: function () {
-    var signIn = <li><a href={this.context.getRouteUrl('signin')}>Sign in</a></li>;
-    if (this.state.user && this.state.user.id !== -1 && this.state.user.alias !== '') {
-      signIn = <li><p className="navbar-text">Signed in as {this.state.user.alias}</p></li>
+  renderAuthItem: function () {
+    if (this.state.user && this.state.user.id !== -1) {
+      return (
+        <a className="header__item header__item--right" href={this.context.getRouteUrl('signout')}>
+          {this.state.user.alias} <i className="icon-logout"></i>
+        </a>
+      );
     }
+
     return (
-      <ul className="nav navbar-nav navbar-right">
-        {signIn}
-      </ul>
+      <a className="header__item header__item--right" href={this.context.getRouteUrl('signin')}>
+        Sign in <i className="icon-login"></i>
+      </a>
     );
   },
   render: function () {
@@ -46,9 +50,7 @@ var App = React.createClass({
           </a>
           <Dropdown className="header__item header__item--blue" options={this.state.allDataCenters} value={this.state.activeDataCenter} onChange={this.performSelectAction('activeDataCenter')}></Dropdown>
           <Dropdown className="header__item header__item--blue" options={this.state.allUsers} value={this.state.activeUser} onChange={this.performSelectAction('activeUser')}></Dropdown>
-          <div className="header__item">
-            {this.renderHeader()}
-          </div>
+          {this.renderAuthItem()}
         </div>
         <div className="app__sidebar sidebar">
           <h2 className="sidebar__header">Compute</h2>

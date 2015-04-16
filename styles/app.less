@@ -19,7 +19,7 @@ a {
   }
 }
 
-button {
+button, .button {
   background: @blue-4;
   border: 0;
   color: @white;
@@ -138,7 +138,7 @@ ul {
   }
 
   &__item {
-    background: @grey-2;
+    background: @header-color;
     color: @white;
     display: inline-block;
     font-size: 18px;
@@ -148,7 +148,7 @@ ul {
     vertical-align: top;
 
     &:hover {
-      background: @grey-3;
+      background: mix(@header-color, @white, 75%);
       text-decoration: none;
     }
 
@@ -174,6 +174,10 @@ ul {
       &:hover {
         background: @red-5;
       }
+    }
+
+    &--right {
+      float: right;
     }
   }
 }
