@@ -7,9 +7,13 @@ var App = React.createClass({
   mappings: {
     allUsers: 'user:users',
     allDataCenters: 'dataCenter:dataCenters',
-    activeUser: 'ui:activeUser',
-    activeDataCenter: 'ui:activeDataCenter',
     user: 'user:user'
+  },
+  propTypes: {
+    route: React.PropTypes.shape({
+      name: React.PropTypes.string.isRequired,
+      params: React.PropTypes.object.isRequired
+    })
   },
   componentWillMount: function () {
     this.context.performAction('dataCenter:dataCenters:get');
@@ -19,7 +23,9 @@ var App = React.createClass({
     var self = this;
 
     return function (value) {
-      self.context.performAction('ui:' + key + ':select', value);
+      var params = JSON.parse(JSON.stringify(self.props.route.params));
+      params[key] = value;
+      self.context.navigateToRoute(self.props.route.name, params);
     }
   },
   componentDidMount: function () {
@@ -48,8 +54,8 @@ var App = React.createClass({
             <div className="header__badge__brand">SDC</div>
             <div className="header__badge__name">Developer Portal</div>
           </a>
-          <Dropdown className="header__item header__item--blue" options={this.state.allDataCenters} value={this.state.activeDataCenter} onChange={this.performSelectAction('activeDataCenter')}></Dropdown>
-          <Dropdown className="header__item header__item--blue" options={this.state.allUsers} value={this.state.activeUser} onChange={this.performSelectAction('activeUser')}></Dropdown>
+          <Dropdown className="header__item header__item--blue" options={this.state.allDataCenters} value={this.props.route.params.dataCenter} onChange={this.performSelectAction('dataCenter')}></Dropdown>
+          <Dropdown className="header__item header__item--blue" options={this.state.allUsers} value={this.props.route.params.user} onChange={this.performSelectAction('user')}></Dropdown>
           {this.renderAuthItem()}
         </div>
         <div className="app__sidebar sidebar">
