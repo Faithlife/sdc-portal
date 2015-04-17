@@ -37,7 +37,7 @@ var HomePage = React.createClass({
         <div className="row">
           {self.state.machines.map(function (machine) {
             return (
-              <div className="row__col row__col--3">
+              <div className="row__col row__col--3" key={machine.id}>
                 <Machine user={self.props.route.params.user} machine={machine} />
               </div>
             );

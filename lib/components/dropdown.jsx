@@ -43,7 +43,7 @@ var Dropdown = React.createClass({
         <ul className={'dropdown__options' + (self.state.open ? ' dropdown__options--open' : '')}>
           {self.props.options.map(function (option) {
             return (
-              <li><button className="dropdown__option" onClick={self.select(option)}>{option}</button></li>
+              <li key={option}><button className="dropdown__option" onClick={self.select(option)}>{option}</button></li>
             );
           })}
         </ul>
