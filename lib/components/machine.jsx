@@ -34,6 +34,13 @@ var Machine = React.createClass({
       dataCenter: this.props.machine.dataCenter
     });
   },
+  handleStop: function () {
+    this.context.performAction('machine:stop', {
+      userId: this.props.user,
+      machineId: this.props.machine.id,
+      dataCenter: this.props.machine.dataCenter
+    });
+  },
   renderStateIcon: function (state) {
     if (state === 'running' || state === 'ready') {
       return <i className="icon-ok"></i>;
@@ -51,6 +58,7 @@ var Machine = React.createClass({
         <div className="machine__actions">
           <button className="machine__action" tabIndex="-1" onClick={this.handleReboot}><i className="icon-ccw"></i> Reboot</button>
           <button className="machine__action" tabIndex="-1" onClick={this.handleStart}><i className="icon-off"></i> Start</button>
+          <button className="machine__action" tabIndex="-1" onClick={this.handleStop}><i className="icon-off"></i> Stop</button>
         </div>
       </div>
     );
