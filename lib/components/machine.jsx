@@ -16,7 +16,9 @@ var Machine = React.createClass({
     });
   },
   componentWillUnmount: function () {
-    // clearInterval(this.interval);
+    this.context.performAction('machine:poll:stop', {
+      machineId: this.props.machine.id
+    });
   },
   handleReboot: function () {
     this.context.performAction('machine:reboot', {
