@@ -1,4 +1,5 @@
 var littlest = require('littlest-isomorph');
+var moment = require('moment');
 var React = require('react');
 
 var Machine = React.createClass({
@@ -48,13 +49,42 @@ var Machine = React.createClass({
 
     return <i className="icon-attention-alt"></i>
   },
+  renderOS: function (os) {
+    if (os === 'smartos') {
+      return 'SmartOS';
+    }
+
+    if (os === 'windows') {
+      return 'Windows';
+    }
+
+    return os;
+  },
+  renderUptime: function (date) {
+    if (!date) {
+      return 'N/A';
+    }
+
+    return moment.duration(Date.now() - Date.parse(date)).humanize();
+  },
   render: function () {
     return (
       <div className={'machine' + (this.props.className ? ' ' + this.props.className : '')}>
         <div className="machine__name">{this.state.machine.name}</div>
         <div className={'machine__state machine__state--' + this.state.machine.state} title={this.state.machine.state}>{this.renderStateIcon(this.state.machine.state)} {this.state.machine.state}</div>
-        <div className="machine__meta">{this.state.machine.computeNode}</div>
-        <div className="machine__meta">{this.state.machine.ips}</div>
+        <table className="machine__meta">
+          <tbody>
+            <tr>
+              <th>OS</th><td>{this.renderOS(this.state.machine.os)}</td>
+            </tr>
+            <tr>
+              <th>IPs</th><td>{this.state.machine.ips.join(', ')}</td>
+            </tr>
+            <tr>
+              <th>Uptime</th><td>{this.renderUptime(this.state.machine.up)}</td>
+            </tr>
+          </tbody>
+        </table>
         <div className="machine__actions">
           <button className="machine__action" tabIndex="-1" onClick={this.handleReboot}><i className="icon-ccw"></i> Reboot</button>
           <button className="machine__action" tabIndex="-1" onClick={this.handleStart}><i className="icon-off"></i> Start</button>
