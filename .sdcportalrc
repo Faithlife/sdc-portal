@@ -1,0 +1,33 @@
+{
+  "client" : {
+    "auth": {
+      "requestTokenUrl": "https://<your-endpoint-here>/initiate",
+      "accessTokenUrl": "https://<your-endpoint-here>/token",
+      "authorizeUrl": "https://<your-endpoint-here>/authorize",
+      "consumerKey": "<your-consumer-key-here>",
+      "consumerSecret": "<your-consumer-secret-here>",
+      "callbackUrl": "http://localhost:8080/api/authorize",
+      "getUserInfoUrl": "https://<your-endpoint-here>/"
+    }
+  },
+  "sdc" : {
+    "dataCenters": {
+      "coal-1": {
+        "cloudapiUrl": "https://10.88.88.5"
+      },
+      "us-west-1": {
+        "cloudapiUrl": "https://us-west-1.api.joyentcloud.com"
+      }
+    },
+    "users": {
+      "admin": {
+        "key": "/Users/sdcportal/admin_rsa", "keyId": "coal-1", "login": "admin",
+        "usersAllowed": [4,8,15,16,23,42]
+      },
+      "JPC-User": {
+        "key": "/Users/sdcportal/admin_rsa", "keyId": "us-west-1", "login": "jpcuser",
+        "usersAllowed": [4,8,15,16,23,42]
+      }
+    }
+  }
+}
