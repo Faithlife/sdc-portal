@@ -44,6 +44,7 @@ context.client = new PortalClient({
 // Allow connecting to self-signed environments.
 if (config.env === 'development') {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+  process.env.SDC_TESTING = '1';
 }
 
 // Global error handler
