@@ -9,6 +9,10 @@ A user-centric HTTP UI for Joyent's SmartDataCenter.
 * Perform actions on existing VMs (e.g. start, stop, reboot).
 * OAuth can be used for sign-in and mapping to SDC and JPC users.
 
+## Screenshots
+
+![](https://ops.faithlife.com/wp-content/uploads/2015/04/Screen-Shot-2015-04-20-at-3.23.29-PM.png "Developer Portal")
+
 ## Development
 
 To run sdc-portal:
