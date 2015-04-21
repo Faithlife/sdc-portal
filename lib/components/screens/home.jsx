@@ -11,7 +11,7 @@ var HomePage = React.createClass({
   componentDidMount: function () {
     this.fetchMachines(this.props.route.params.user, this.props.route.params.dataCenter);
   },
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate: function (nextProps, nextState) {
     if (
       nextProps.route.params.user !== this.props.route.params.user ||
       nextProps.route.params.dataCenter !== this.props.route.params.dataCenter
@@ -26,7 +26,7 @@ var HomePage = React.createClass({
 
     this.context.performAction('machine:machines:get', {
       dataCenter: dataCenter,
-      userId: user,
+      userId: user
     });
   },
   render: function () {

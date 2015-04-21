@@ -1,7 +1,7 @@
 var React = require('react');
 
 var Dropdown = React.createClass({
-  getDefaultProps: function() {
+  getDefaultProps: function () {
     return {
       value: null,
       onChange: function () {}

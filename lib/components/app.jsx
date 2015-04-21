@@ -26,7 +26,7 @@ var App = React.createClass({
       var params = JSON.parse(JSON.stringify(self.props.route.params));
       params[key] = value;
       self.context.navigateToRoute(self.props.route.name, params);
-    }
+    };
   },
   componentDidMount: function () {
     this.context.performAction('user:getme');

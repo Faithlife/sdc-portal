@@ -6,7 +6,7 @@ var Machine = React.createClass({
   mixins: [littlest.Mixin],
   mappings: {
     machine: function () {
-      return 'machine:' + this.props.machine.id
+      return 'machine:' + this.props.machine.id;
     }
   },
   componentDidMount: function () {
@@ -47,7 +47,7 @@ var Machine = React.createClass({
       return <i className="icon-ok"></i>;
     }
 
-    return <i className="icon-attention-alt"></i>
+    return <i className="icon-attention-alt"></i>;
   },
   renderOS: function (os) {
     if (os === 'smartos') {

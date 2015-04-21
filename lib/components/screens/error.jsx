@@ -1,7 +1,7 @@
 var React = require('react');
 var App = require('../app.jsx');
 
-var Error = React.createClass({
+var ErrorScreen = React.createClass({
   render: function () {
     return (
       <App>
@@ -12,4 +12,4 @@ var Error = React.createClass({
   }
 });
 
-module.exports = Error;
+module.exports = ErrorScreen;
