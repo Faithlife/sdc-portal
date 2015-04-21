@@ -66,6 +66,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'public'), {
   redirect: false
 }));
 
+// Plug in our internal API. See lib/server/api.js for more information.
 var apiSubapp = sdcportalApi.generateSubapp({
   authProvider: new AuthProvider()
 });
