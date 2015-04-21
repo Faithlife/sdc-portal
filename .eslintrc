@@ -1,0 +1,51 @@
+{
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    // Possible Errors
+    // Best Practices
+    "no-else-return": 1,
+    "no-floating-decimal": 1,
+    "no-self-compare": 1,
+    "no-throw-literal": 1,
+    "no-void": 2,
+    "radix": 1,
+    "vars-on-top": 1,
+    "wrap-iife": [1, "outside"],
+    // Strict Mode
+    "strict": 0,
+    // Variables
+    "no-catch-shadow": 1,
+    "no-undefined": 1,
+    "no-unused-vars": 0,
+    // Node.js
+    "no-process-exit": 0,
+    "no-sync": 1,
+    // Stylistic Issues
+    "brace-style": [1, "1tbs"],
+    "comma-style": 1,
+    "consistent-this": [1, "self"],
+    "func-style": [1, "declaration"],
+    "indent": [1, 2],
+    "no-inline-comments": 1,
+    "no-nested-ternary": 2,
+    "no-underscore-dangle": 0,
+    "padded-blocks": [1, "never"],
+    "quote-props": [1, "as-needed"],
+    "quotes": ["single", 1],
+    "space-after-keywords": [1, "always"],
+    "space-before-blocks": [1, "always"],
+    "space-before-function-paren": [1, {
+      "anonymous": "always",
+      "named": "never"
+    }],
+    "space-in-parens": [1, "never"],
+    "space-unary-ops": 1,
+    "spaced-line-comment": [1, "always"],
+  }
+}

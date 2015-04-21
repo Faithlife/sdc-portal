@@ -39,6 +39,9 @@ module.exports = function (grunt) {
         }
       }
     },
+    eslint: {
+      target: ['lib/**/*.js', 'lib/**/*.jsx', 'bin/client', 'bin/server']
+    },
     exorcise: {
       app: {
         files: {
@@ -105,6 +108,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-exorcise');
 
   grunt.registerTask('npm', function (command, arg) {
@@ -143,6 +147,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('logs', ['npm:run-script:logs']);
-  grunt.registerTask('default', ['browserify', 'exorcise', 'less']);
+  grunt.registerTask('lint', ['eslint']);
+  grunt.registerTask('default', ['browserify', 'exorcise', 'less', 'lint']);
   grunt.registerTask('dev', ['browserify:dependencies', 'exorcise:dependencies', 'watch']);
 };
