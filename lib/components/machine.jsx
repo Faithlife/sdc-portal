@@ -67,6 +67,24 @@ var Machine = React.createClass({
 
     return moment.duration(Date.now() - Date.parse(date)).humanize();
   },
+  renderActions: function (state) {
+    if (state === 'running') {
+      return [
+        <button className="machine__action" tabIndex="-1" onClick={this.handleReboot} key="reboot">
+          <i className="icon-ccw"></i> Reboot
+        </button>,
+        <button className="machine__action" tabIndex="-1" onClick={this.handleStop} key="stop">
+          <i className="icon-off"></i> Stop
+        </button>
+      ];
+    }
+
+    return [
+      <button className="machine__action" tabIndex="-1" onClick={this.handleStart} key="start">
+        <i className="icon-off"></i> Start
+      </button>
+    ];
+  },
   render: function () {
     return (
       <div className={'machine' + (this.props.className ? ' ' + this.props.className : '')}>
@@ -86,9 +104,7 @@ var Machine = React.createClass({
           </tbody>
         </table>
         <div className="machine__actions">
-          <button className="machine__action" tabIndex="-1" onClick={this.handleReboot}><i className="icon-ccw"></i> Reboot</button>
-          <button className="machine__action" tabIndex="-1" onClick={this.handleStart}><i className="icon-off"></i> Start</button>
-          <button className="machine__action" tabIndex="-1" onClick={this.handleStop}><i className="icon-off"></i> Stop</button>
+          {this.renderActions(this.state.machine.state)}
         </div>
       </div>
     );
