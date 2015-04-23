@@ -22,7 +22,7 @@ var PortalClient = require('../lib/clients/portal');
 var config = require('../lib/config');
 var context = require('../lib/context');
 var logger = require('../lib/logger');
-var AuthProvider = require('../lib/clients/auth');
+var AuthProvider = require('../lib/providers/oauth');
 var sdcportalApi = require('../lib/server/api');
 var app = express();
 var navigator = littlest.ExpressNavigator.createNavigator({
@@ -68,7 +68,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'public'), {
 
 // Plug in our internal API. See lib/server/api.js for more information.
 var apiSubapp = sdcportalApi.generateSubapp({
-  authProvider: new AuthProvider()
+  authProvider: new AuthProvider(config.auth)
 });
 app.use('/api', apiSubapp);
 

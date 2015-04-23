@@ -1,13 +1,19 @@
 {
-  "client" : {
-    "auth": {
-      "requestTokenUrl": "https://<your-endpoint-here>/initiate",
-      "accessTokenUrl": "https://<your-endpoint-here>/token",
-      "authorizeUrl": "https://<your-endpoint-here>/authorize",
-      "consumerKey": "<your-consumer-key-here>",
-      "consumerSecret": "<your-consumer-secret-here>",
-      "callbackUrl": "http://localhost:8080/api/authorize",
-      "getUserInfoUrl": "https://<your-endpoint-here>/"
+  "auth": {
+    "requestTokenUrl": "https://<your-endpoint-here>/initiate",
+    "authorizeUrl": "https://<your-endpoint-here>/authorize",
+    "accessTokenUrl": "https://<your-endpoint-here>/token",
+    "consumerKey": "<your-consumer-key-here>",
+    "consumerSecret": "<your-consumer-secret-here>",
+    "developerInfoUrl": "https://<your-endpoint-here>/",
+    "developers": {
+      // Map of developer ID to available SDC logins:
+      "bob": ["Core", "Edge"],
+      "alice": ["Edge"],
+      "charlie": ["Core"]
+    },
+    "session": {
+      "secret": "<unique-string-here>"
     }
   },
   "sdc" : {
@@ -21,12 +27,10 @@
     },
     "users": {
       "admin": {
-        "key": "/Users/sdcportal/admin_rsa", "keyId": "coal-1", "login": "admin",
-        "usersAllowed": [4,8,15,16,23,42]
+        "key": "/Users/sdcportal/admin_rsa", "keyId": "coal-1", "login": "admin"
       },
       "JPC-User": {
-        "key": "/Users/sdcportal/admin_rsa", "keyId": "us-west-1", "login": "jpcuser",
-        "usersAllowed": [4,8,15,16,23,42]
+        "key": "/Users/sdcportal/admin_rsa", "keyId": "us-west-1", "login": "jpcuser"
       }
     }
   }

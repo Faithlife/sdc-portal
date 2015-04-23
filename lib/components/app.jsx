@@ -35,7 +35,7 @@ var App = React.createClass({
     if (this.state.user && this.state.user.id !== -1) {
       return (
         <a className="header__item header__item--right" href={this.context.getRouteUrl('signout')}>
-          {this.state.user.alias} <i className="icon-logout"></i>
+          {this.state.user.name} <i className="icon-logout"></i>
         </a>
       );
     }
