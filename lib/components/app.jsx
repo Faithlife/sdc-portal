@@ -32,7 +32,11 @@ var App = React.createClass({
     this.context.performAction('user:getme');
   },
   renderAuthItem: function () {
-    if (this.state.user && this.state.user.id !== -1) {
+    if (this.state.user) {
+      if (!this.state.user.id) {
+        return <span className="header__item header__item--right">{this.state.user.name}</span>
+      }
+
       return (
         <a className="header__item header__item--right" href={this.context.getRouteUrl('signout')}>
           {this.state.user.name} <i className="icon-logout"></i>

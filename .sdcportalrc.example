@@ -1,5 +1,6 @@
 {
   "auth": {
+    "provider": "oauth",
     "requestTokenUrl": "https://<your-endpoint-here>/initiate",
     "authorizeUrl": "https://<your-endpoint-here>/authorize",
     "accessTokenUrl": "https://<your-endpoint-here>/token",
