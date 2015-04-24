@@ -24,6 +24,7 @@ var context = require('../lib/context');
 var logger = require('../lib/logger');
 var providers = require('../lib/providers');
 var sdcportalApi = require('../lib/server/api');
+var websocketSupport = require('../lib/server/ws');
 var app = express();
 var navigator = littlest.ExpressNavigator.createNavigator({
   renderer: littlest.StaticRenderer.createRenderer({
@@ -105,7 +106,10 @@ app.use(navigator.requestHandler());
 app.listen(config.port, config.hostname)
   .on('listening', function () {
     logger.log('Server %s listening at %s:%s...', process.pid, this.address().address, this.address().port);
-  });
+  })
+  .on('upgrade', websocketSupport.generateHandler({
+    authProvider: authProvider
+  }));
 
 // The `disconnect` event is used by `cluster`, the master process, to signal
 // a graceful shutdown. Node core will take care of managing the currently-open
