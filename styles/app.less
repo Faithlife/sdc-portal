@@ -52,6 +52,7 @@ ul, dl {
     border: 0;
     height: 100%;
     outline: 0;
+    padding: 0 16px;
     width: 100%;
   }
 
@@ -76,6 +77,21 @@ ul, dl {
     padding: 0 16px;
     text-align: left;
     min-width: 100%;
+    white-space: nowrap;
+  }
+
+  &__label {
+    font-size: 10px;
+    left: 16px;
+    line-height: 10px;
+    pointer-events: none;
+    position: absolute;
+    text-transform: uppercase;
+    top: 8px;
+  }
+
+  &__label + &__selected {
+    padding-top: 6px;
   }
 }
 
@@ -178,6 +194,10 @@ ul, dl {
 
     &--right {
       float: right;
+    }
+
+    &--button {
+      padding: 0;
     }
   }
 }

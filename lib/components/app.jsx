@@ -58,8 +58,20 @@ var App = React.createClass({
             <div className="header__badge__brand">SDC</div>
             <div className="header__badge__name">Developer Portal</div>
           </a>
-          <Dropdown className="header__item header__item--blue" options={this.state.allDataCenters} value={this.props.route.params.dataCenter} onChange={this.performSelectAction('dataCenter')}></Dropdown>
-          <Dropdown className="header__item header__item--blue" options={this.state.allUsers} value={this.props.route.params.user} onChange={this.performSelectAction('user')}></Dropdown>
+          <Dropdown className="header__item header__item--blue header__item--button"
+            options={this.state.allDataCenters}
+            value={this.props.route.params.dataCenter}
+            onChange={this.performSelectAction('dataCenter')}
+            label="datacenter"
+            icon="globe"
+            />
+          <Dropdown className="header__item header__item--blue header__item--button"
+            options={this.state.allUsers}
+            value={this.props.route.params.user}
+            onChange={this.performSelectAction('user')}
+            label="user"
+            icon="user"
+            />
           {this.renderAuthItem()}
         </div>
         <div className="app__sidebar sidebar">
