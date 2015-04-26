@@ -1,22 +1,30 @@
+/*
+ * The auth provider in this example has been commented out.
+ * You will default to full access "AdminParty" non-auth.
+ * If you want to use the sample OAuth configuration you can setup a developer
+ * account and obtain a consumer key and secret at https://developer.faithlife.com
+ */
 {
-  "auth": {
+/*  "auth": {
     "provider": "oauth",
-    "requestTokenUrl": "https://<your-endpoint-here>/initiate",
-    "authorizeUrl": "https://<your-endpoint-here>/authorize",
-    "accessTokenUrl": "https://<your-endpoint-here>/token",
+    "requestTokenUrl": "https://auth.logos.com/oauth/v1/initiate",
+    "authorizeUrl": "https://auth.logos.com/oauth/v1/authorize",
+    "accessTokenUrl": "https://auth.logos.com/oauth/v1/token",
     "consumerKey": "<your-consumer-key-here>",
     "consumerSecret": "<your-consumer-secret-here>",
-    "developerInfoUrl": "https://<your-endpoint-here>/",
+    "developerInfoUrl": "https://auth.logos.com/oauth/v1/users/current?setAlias=true",
+    "developerIdKey": "userId", //userId will differ if not using auth.logos.com
+    "developerNameKey": "alias", //alias will differ if not using auth.logos.com
     "developers": {
       // Map of developer ID to available SDC logins:
-      "bob": ["Core", "Edge"],
-      "alice": ["Edge"],
-      "charlie": ["Core"]
+      "123456789": ["Core", "API"],
+      "912356777": ["API"],
+      "222000333": ["Core"]
     },
     "session": {
       "secret": "<unique-string-here>"
     }
-  },
+  },*/
   "sdc" : {
     "dataCenters": {
       "coal-1": {
@@ -28,7 +36,7 @@
     },
     "users": {
       "admin": {
-        "key": "/Users/sdcportal/admin_rsa", "keyId": "coal-1", "login": "admin"
+        "key": "/Users/sdcportal/admin_rsa", "keyId": "coal-1 sdc key", "login": "admin"
       },
       "JPC-User": {
         "key": "/Users/sdcportal/admin_rsa", "keyId": "us-west-1", "login": "jpcuser"
