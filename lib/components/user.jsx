@@ -4,20 +4,24 @@ var React = require('react');
 var User = React.createClass({
   mixins: [littlest.Mixin],
   renderSSHKeys: function (sshKeys) {
-    if (!sshKeys) {
-      return;
+    if (!sshKeys || !sshKeys.length) {
+      return <p>No keys configured.</p>;
     }
 
-    var keys = sshKeys.map(function (sshKey) {
-      return (
-        <div key={sshKey.name} className="user__sshkey">
-          <div>{sshKey.name} : {sshKey.fingerprint}</div>
-          <div>{sshKey.key}</div>
-        </div>
-      );
-    });
-
-    return keys;
+    return (
+      <ul className="row">
+        {sshKeys.map(function (sshKey) {
+          return (
+            <li className="row__col row__col--6" key={sshKey.name}>
+              <div className="ssh-key">
+                <h3 className="ssh-key__name">{sshKey.name}</h3>
+                <pre className="ssh-key__code"><code className="code--block">{sshKey.key}</code></pre>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    );
   },
   render: function () {
     var self = this;
@@ -27,9 +31,8 @@ var User = React.createClass({
 
     return (
       <div className="user">
-        <div className="user__name">Login: {self.props.user.login}</div>
-        <div className="user__sshkeys">SSH Keys</div>
-        <div>{self.renderSSHKeys(self.props.user.sshKeys)}</div>
+        <h2>SSH Keys</h2>
+        {this.renderSSHKeys(self.props.user.sshKeys)}
       </div>
     );
   }

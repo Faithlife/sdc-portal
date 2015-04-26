@@ -43,6 +43,17 @@ ul, dl {
   padding: 0;
 }
 
+pre {
+  margin: 0;
+}
+
+.code {
+  &--block {
+    white-space: normal;
+    word-break: break-all;
+  }
+}
+
 .dropdown {
   display: inline-block;
   position: relative;
@@ -227,7 +238,7 @@ ul, dl {
   }
 }
 
-.machine {
+.machine, .ssh-key {
   background: @white;
   .border-radius(2px);
   .box-shadow(0px 1px 1px @grey-4);
@@ -336,6 +347,10 @@ ul, dl {
     &:last-child {
       .border-bottom-right-radius(2px);
     }
+  }
+
+  &__code {
+    padding: 8px;
   }
 }
 
