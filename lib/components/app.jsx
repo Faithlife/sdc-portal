@@ -7,7 +7,7 @@ var App = React.createClass({
   mappings: {
     allUsers: 'user:users',
     allDataCenters: 'dataCenter:dataCenters',
-    user: 'user:user'
+    developer: 'developer:current',
   },
   propTypes: {
     route: React.PropTypes.shape({
@@ -37,17 +37,17 @@ var App = React.createClass({
     };
   },
   componentDidMount: function () {
-    this.context.performAction('user:getme');
+    this.context.performAction('developer:current:get');
   },
   renderAuthItem: function () {
-    if (this.state.user) {
-      if (!this.state.user.id) {
-        return <span className="header__item header__item--right">{this.state.user.name}</span>
+    if (this.state.developer) {
+      if (!this.state.developer.id) {
+        return <span className="header__item header__item--right">{this.state.developer.name}</span>
       }
 
       return (
         <a className="header__item header__item--right" href={this.context.getRouteUrl('signout')}>
-          {this.state.user.name} <i className="icon-logout"></i>
+          {this.state.developer.name} <i className="icon-logout"></i>
         </a>
       );
     }
