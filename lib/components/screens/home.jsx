@@ -6,6 +6,7 @@ var Machine = require('../machine.jsx');
 var HomePage = React.createClass({
   mixins: [littlest.Mixin],
   mappings: {
+    filter: 'machine:filter',
     machines: 'machine:machines'
   },
   componentDidMount: function () {
@@ -35,7 +36,11 @@ var HomePage = React.createClass({
     return (
       <App route={this.props.route}>
         <div className="row">
-          {self.state.machines.map(function (machine) {
+          {self.state.machines
+            .filter(function (machine) {
+              return !self.state.filter || machine.name.toLowerCase().indexOf(self.state.filter.toLowerCase()) != -1;
+            })
+            .map(function (machine) {
             return (
               <div className="row__col row__col--3" key={machine.id}>
                 <Machine user={self.props.route.params.user} machine={machine} />
