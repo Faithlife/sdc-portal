@@ -7,7 +7,7 @@ var App = React.createClass({
   mappings: {
     allUsers: 'user:users',
     allDataCenters: 'dataCenter:dataCenters',
-    user: 'user:user'
+    developer: 'developer:current',
   },
   propTypes: {
     route: React.PropTypes.shape({
@@ -16,30 +16,41 @@ var App = React.createClass({
     })
   },
   componentWillMount: function () {
-    this.context.performAction('dataCenter:dataCenters:get');
-    this.context.performAction('user:users');
+    var self = this;
+    self.context.performAction('dataCenter:dataCenters:get');
+
+    if (self.props.route.params.dataCenter) {
+      self.context.performAction('user:users', { dataCenter: self.props.route.params.dataCenter });
+    }
   },
   performSelectAction: function (key) {
     var self = this;
 
     return function (value) {
+      if (key === 'dataCenter') {
+        self.context.performAction('user:users', { dataCenter: value });
+      }
+
       var params = JSON.parse(JSON.stringify(self.props.route.params));
       params[key] = value;
       self.context.navigateToRoute(self.props.route.name, params);
     };
   },
   componentDidMount: function () {
-    this.context.performAction('user:getme');
+    this.context.performAction('developer:current:get');
+
+    var sidebarItem = this.refs[this.props.route.name].getDOMNode();
+    sidebarItem.className = sidebarItem.className + ' sidebar__item--active';
   },
   renderAuthItem: function () {
-    if (this.state.user) {
-      if (!this.state.user.id) {
-        return <span className="header__item header__item--right">{this.state.user.name}</span>
+    if (this.state.developer) {
+      if (!this.state.developer.id) {
+        return <span className="header__item header__item--right">{this.state.developer.name}</span>
       }
 
       return (
         <a className="header__item header__item--right" href={this.context.getRouteUrl('signout')}>
-          {this.state.user.name} <i className="icon-logout"></i>
+          {this.state.developer.name} <i className="icon-logout"></i>
         </a>
       );
     }
@@ -54,7 +65,7 @@ var App = React.createClass({
     return (
       <div className="app">
         <div className="app__header">
-          <a className="header__badge" href={this.context.getRouteUrl('home')}>
+          <a className="header__badge" href={this.context.getRouteUrl('home', this.props.route.params)}>
             <div className="header__badge__brand">SDC</div>
             <div className="header__badge__name">Developer Portal</div>
           </a>
@@ -66,7 +77,7 @@ var App = React.createClass({
             icon="globe"
             />
           <Dropdown className="header__item header__item--blue header__item--button"
-            options={this.state.allUsers}
+            options={this.state.allUsers.map(function (user) { return user.login; })}
             value={this.props.route.params.user}
             onChange={this.performSelectAction('user')}
             label="user"
@@ -78,8 +89,13 @@ var App = React.createClass({
           <h2 className="sidebar__header">Compute</h2>
           <ul>
             <li>
-              <a className="sidebar__item sidebar__item--active" href={this.context.getRouteUrl('home')}>
+              <a className="sidebar__item" ref="home" href={this.context.getRouteUrl('home', this.props.route.params)}>
                 <i className="icon-cubes"></i> Virtual Machines
+              </a>
+            </li>
+            <li>
+              <a className="sidebar__item" ref="user" href={this.context.getRouteUrl('user', this.props.route.params)}>
+                <i className="icon-user"></i> User
               </a>
             </li>
           </ul>
