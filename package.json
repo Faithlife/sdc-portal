@@ -15,6 +15,7 @@
     "cookie-session": "^1.1.0",
     "debug": "~2.1.0",
     "express": "~4.9.3",
+    "faye-websocket": "~0.9.4",
     "grunt-eslint": "~11.0.0",
     "iso-bunyan-stream": "~1.0.0",
     "littlest-isomorph": "~0.10.5",
