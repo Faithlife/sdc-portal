@@ -7,11 +7,18 @@ A user-centric HTTP UI for Joyent's SmartDataCenter.
 * Multi-datacenter and JPC aware.
 * Get details about VMs in different SDC and JPC regions.
 * Perform actions on existing VMs (e.g. start, stop, reboot).
+* Pluggable authentication providers, including "AdminParty" for testing.
 * OAuth can be used for sign-in and mapping to SDC and JPC users.
+* Search for VMs
+* Manage user details
 
 ## Screenshots
 
-![](https://ops.faithlife.com/wp-content/uploads/2015/04/Screen-Shot-2015-04-20-at-3.23.29-PM.png "Developer Portal")
+![Developer Portal](https://ops.faithlife.com/wp-content/uploads/2015/04/Screen-Shot-2015-04-26-at-11.19.18-AM.png "Developer Portal")
+
+![Instance Search](https://ops.faithlife.com/wp-content/uploads/2015/04/Screen-Shot-2015-04-26-at-12.38.26-PM.png "Instance Search")
+
+![Action confirmation](https://ops.faithlife.com/wp-content/uploads/2015/04/Screen-Shot-2015-04-26-at-12.37.27-PM.png "Action Confirmation")
 
 ## Development
 
@@ -19,7 +26,7 @@ To run sdc-portal:
 
     git clone git@github.com:Faithlife/sdc-portal.git
     cd sdc-portal
-    cp .sdcportalrc ~/.sdcportalrc
+    cp .sdcportalrc.example ~/.sdcportalrc
     npm install
     grunt dev
 
