@@ -1,6 +1,7 @@
 var littlest = require('littlest-isomorph');
 var React = require('react');
 var Dropdown = require('./dropdown.jsx');
+var Filter = require('./filter.jsx');
 
 var App = React.createClass({
   mixins: [littlest.Mixin],
@@ -83,6 +84,7 @@ var App = React.createClass({
             label="user"
             icon="user"
             />
+          <Filter />
           {this.renderAuthItem()}
         </div>
         <div className="app__sidebar sidebar">
