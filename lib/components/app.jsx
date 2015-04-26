@@ -38,6 +38,9 @@ var App = React.createClass({
   },
   componentDidMount: function () {
     this.context.performAction('developer:current:get');
+
+    var sidebarItem = this.refs[this.props.route.name].getDOMNode();
+    sidebarItem.className = sidebarItem.className + ' sidebar__item--active';
   },
   renderAuthItem: function () {
     if (this.state.developer) {
@@ -74,7 +77,7 @@ var App = React.createClass({
             icon="globe"
             />
           <Dropdown className="header__item header__item--blue header__item--button"
-            options={this.state.allUsers.map(function (user) { return user.name; })}
+            options={this.state.allUsers.map(function (user) { return user.login; })}
             value={this.props.route.params.user}
             onChange={this.performSelectAction('user')}
             label="user"
@@ -86,8 +89,13 @@ var App = React.createClass({
           <h2 className="sidebar__header">Compute</h2>
           <ul>
             <li>
-              <a className="sidebar__item sidebar__item--active" href={this.context.getRouteUrl('home', this.props.route.params)}>
+              <a className="sidebar__item" ref="home" href={this.context.getRouteUrl('home', this.props.route.params)}>
                 <i className="icon-cubes"></i> Virtual Machines
+              </a>
+            </li>
+            <li>
+              <a className="sidebar__item" ref="user" href={this.context.getRouteUrl('user', this.props.route.params)}>
+                <i className="icon-user"></i> User
               </a>
             </li>
           </ul>
