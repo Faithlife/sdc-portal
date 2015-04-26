@@ -1,6 +1,7 @@
 var littlest = require('littlest-isomorph');
 var moment = require('moment');
 var React = require('react');
+var MachineAction = require('./machine-action.jsx')
 
 var Machine = React.createClass({
   mixins: [littlest.Mixin],
@@ -70,19 +71,13 @@ var Machine = React.createClass({
   renderActions: function (state) {
     if (state === 'running') {
       return [
-        <button className="machine__action" tabIndex="-1" onClick={this.handleReboot} key="reboot">
-          <i className="icon-ccw"></i> Reboot
-        </button>,
-        <button className="machine__action" tabIndex="-1" onClick={this.handleStop} key="stop">
-          <i className="icon-off"></i> Stop
-        </button>
+        <MachineAction handleOnClick={this.handleReboot} icon="icon-ccw" key="reboot" label="Reboot" />,
+        <MachineAction handleOnClick={this.handleStop} icon="icon-off" key="stop" label="Stop" />
       ];
     }
 
     return [
-      <button className="machine__action" tabIndex="-1" onClick={this.handleStart} key="start">
-        <i className="icon-off"></i> Start
-      </button>
+      <MachineAction handleOnClick={this.handleStart} icon="icon-off" key="start" label="Start" />
     ];
   },
   render: function () {
