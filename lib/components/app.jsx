@@ -16,13 +16,21 @@ var App = React.createClass({
     })
   },
   componentWillMount: function () {
-    this.context.performAction('dataCenter:dataCenters:get');
-    this.context.performAction('user:users');
+    var self = this;
+    self.context.performAction('dataCenter:dataCenters:get');
+
+    if (self.props.route.params.dataCenter) {
+      self.context.performAction('user:users', { dataCenter: self.props.route.params.dataCenter });
+    }
   },
   performSelectAction: function (key) {
     var self = this;
 
     return function (value) {
+      if (key === 'dataCenter') {
+        self.context.performAction('user:users', { dataCenter: value });
+      }
+
       var params = JSON.parse(JSON.stringify(self.props.route.params));
       params[key] = value;
       self.context.navigateToRoute(self.props.route.name, params);
@@ -66,7 +74,7 @@ var App = React.createClass({
             icon="globe"
             />
           <Dropdown className="header__item header__item--blue header__item--button"
-            options={this.state.allUsers}
+            options={this.state.allUsers.map(function (user) { return user.name; })}
             value={this.props.route.params.user}
             onChange={this.performSelectAction('user')}
             label="user"
