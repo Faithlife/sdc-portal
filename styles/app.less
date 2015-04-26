@@ -202,10 +202,21 @@ ul, dl {
   }
 
   &__filter {
-    width: 12em;
+    display: inline-block;
     font-size: 18px;
-    font-style: italic;
-    color: @grey-4;
+    height: @header-height;
+    line-height: @header-height;
+    margin: 0 8px;
+    vertical-align: top;
+
+    input[type=text] {
+      background: @header-color;
+      border: 1px solid @grey-6;
+      color: @grey-6;
+      font-style: italic;
+      padding: 4px;
+      width: 12em;
+    }
   }
 }
 

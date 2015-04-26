@@ -18,7 +18,9 @@ var Filter = React.createClass({
   },
   render: function () {
     return (
-      <input type="text" className="header__filter" placeholder="Filter" value={this.state.filter} onChange={this.handleFilterChange} />
+      <div className="header__filter">
+        <input type="text" placeholder="Filter" value={this.state.filter} onChange={this.handleFilterChange} />
+      </div>
     );
   }
 });
