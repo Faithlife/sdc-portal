@@ -62,7 +62,7 @@ var App = React.createClass({
     return (
       <div className="app">
         <div className="app__header">
-          <a className="header__badge" href={this.context.getRouteUrl('home')}>
+          <a className="header__badge" href={this.context.getRouteUrl('home', this.props.route.params)}>
             <div className="header__badge__brand">SDC</div>
             <div className="header__badge__name">Developer Portal</div>
           </a>
@@ -86,7 +86,7 @@ var App = React.createClass({
           <h2 className="sidebar__header">Compute</h2>
           <ul>
             <li>
-              <a className="sidebar__item sidebar__item--active" href={this.context.getRouteUrl('home')}>
+              <a className="sidebar__item sidebar__item--active" href={this.context.getRouteUrl('home', this.props.route.params)}>
                 <i className="icon-cubes"></i> Virtual Machines
               </a>
             </li>
