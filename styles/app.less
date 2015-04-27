@@ -106,6 +106,27 @@ pre {
   }
 }
 
+.filter {
+  background: @grey-4;
+  border: 1px solid @grey-4;
+  .border-radius(2px);
+  color: @white;
+  display: flex;
+  font-size: 16px;
+
+  &__label {
+    padding: 8px 16px;
+  }
+
+  &__input {
+    background: @white;
+    border: 0;
+    color: @grey-2;
+    flex: 1;
+    padding: 8px;
+  }
+}
+
 .app {
   height: 100%;
 

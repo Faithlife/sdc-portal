@@ -2,6 +2,7 @@ var littlest = require('littlest-isomorph');
 var React = require('react');
 var App = require('../app.jsx');
 var Machine = require('../machine.jsx');
+var Filter = require('../filter.jsx');
 
 var HomePage = React.createClass({
   mixins: [littlest.Mixin],
@@ -35,6 +36,11 @@ var HomePage = React.createClass({
 
     return (
       <App route={this.props.route}>
+        <div className="row">
+          <div className="row__col row__col--6">
+            <Filter />
+          </div>
+        </div>
         <div className="row">
           {self.state.machines
             .filter(function (machine) {
