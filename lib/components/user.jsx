@@ -26,7 +26,7 @@ var User = React.createClass({
   render: function () {
     var self = this;
     if (!self.props.user) {
-      return;
+      return null;
     }
 
     return (

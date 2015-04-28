@@ -46,7 +46,7 @@ var Dropdown = React.createClass({
       return null;
     }
 
-    return <div className="dropdown__label">{this.props.label}</div>
+    return <div className="dropdown__label">{this.props.label}</div>;
   },
   render: function () {
     var self = this;

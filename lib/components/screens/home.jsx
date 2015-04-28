@@ -44,7 +44,7 @@ var HomePage = React.createClass({
         <div className="row">
           {self.state.machines
             .filter(function (machine) {
-              return !self.state.filter || machine.name.toLowerCase().indexOf(self.state.filter.toLowerCase()) != -1;
+              return !self.state.filter || machine.name.toLowerCase().indexOf(self.state.filter.toLowerCase()) !== -1;
             })
             .map(function (machine) {
             return (

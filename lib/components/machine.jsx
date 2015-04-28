@@ -1,7 +1,7 @@
 var littlest = require('littlest-isomorph');
 var moment = require('moment');
 var React = require('react');
-var MachineAction = require('./machine-action.jsx')
+var MachineAction = require('./machine-action.jsx');
 
 var Machine = React.createClass({
   mixins: [littlest.Mixin],

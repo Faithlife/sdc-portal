@@ -7,7 +7,7 @@ var App = React.createClass({
   mappings: {
     allUsers: 'user:users',
     allDataCenters: 'dataCenter:dataCenters',
-    developer: 'developer:current',
+    developer: 'developer:current'
   },
   propTypes: {
     route: React.PropTypes.shape({
@@ -27,25 +27,29 @@ var App = React.createClass({
     var self = this;
 
     return function (value) {
+      var params;
+
       if (key === 'dataCenter') {
         self.context.performAction('user:users', { dataCenter: value });
       }
 
-      var params = JSON.parse(JSON.stringify(self.props.route.params));
+      params = JSON.parse(JSON.stringify(self.props.route.params));
       params[key] = value;
       self.context.navigateToRoute(self.props.route.name, params);
     };
   },
   componentDidMount: function () {
+    var sidebarItem;
+
     this.context.performAction('developer:current:get');
 
-    var sidebarItem = this.refs[this.props.route.name].getDOMNode();
+    sidebarItem = this.refs[this.props.route.name].getDOMNode();
     sidebarItem.className = sidebarItem.className + ' sidebar__item--active';
   },
   renderAuthItem: function () {
     if (this.state.developer) {
       if (!this.state.developer.id) {
-        return <span className="header__item header__item--right">{this.state.developer.name}</span>
+        return <span className="header__item header__item--right">{this.state.developer.name}</span>;
       }
 
       return (
@@ -77,7 +81,9 @@ var App = React.createClass({
             icon="globe"
             />
           <Dropdown className="header__item header__item--blue header__item--button"
-            options={this.state.allUsers.map(function (user) { return user.login; })}
+            options={this.state.allUsers.map(function (user) {
+              return user.login;
+            })}
             value={this.props.route.params.user}
             onChange={this.performSelectAction('user')}
             label="user"

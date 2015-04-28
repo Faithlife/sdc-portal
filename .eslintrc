@@ -23,6 +23,7 @@
     "no-catch-shadow": 1,
     "no-undefined": 1,
     "no-unused-vars": 0,
+    "no-use-before-define": [2, "nofunc"],
     // Node.js
     "no-process-exit": 0,
     "no-sync": 1,
