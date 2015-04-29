@@ -28,7 +28,7 @@ To run sdc-portal:
     cd sdc-portal;
     cp .sdcportalrc.example ~/.sdcportalrc;
     npm install;
-    NODE_ENV=development; # necessary if testing against CoaL or other unsigned CloudAPI endpoints
+    export NODE_ENV=development; # necessary if testing against CoaL or other unsigned CloudAPI endpoints
     grunt dev;
 
 ## Configuration file
