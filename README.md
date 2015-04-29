@@ -24,11 +24,12 @@ A user-centric HTTP UI for Joyent's SmartDataCenter.
 
 To run sdc-portal:
 
-    git clone git@github.com:Faithlife/sdc-portal.git
-    cd sdc-portal
-    cp .sdcportalrc.example ~/.sdcportalrc
-    npm install
-    grunt dev
+    git clone git@github.com:Faithlife/sdc-portal.git;
+    cd sdc-portal;
+    cp .sdcportalrc.example ~/.sdcportalrc;
+    npm install;
+    NODE_ENV=development; # necessary if testing against CoaL or other unsigned CloudAPI endpoints
+    grunt dev;
 
 ## Configuration file
 
