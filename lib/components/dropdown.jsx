@@ -14,8 +14,21 @@ var Dropdown = React.createClass({
       open: false
     };
   },
+  componentDidMount: function () {
+    var self = this;
+
+    window.document.addEventListener('click', function (event) {
+      if (event.target.closest('.dropdown') === self.getDOMNode()) {
+        return;
+      }
+
+      if (self.state.open) {
+        self.toggle();
+      }
+    }, false);
+  },
   toggle: function (event) {
-    event.preventDefault();
+    event && event.preventDefault();
 
     this.setState({
       open: !this.state.open
