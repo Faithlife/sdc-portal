@@ -35,6 +35,8 @@ To run sdc-portal:
 
 The configuration file `~/.sdcportalrc` needs to be created before sdc-portal can run. An example `.sdcportalrc` file configured for use with CoaL is in the root of this repository. OAuth configuration, data center details, and user to ssh key mappings need to be added or modified for your particular setup.
 
+**Important: Make sure you delete or replace any of the commented out sections of the sample config, otherwise the app will not run properly.**
+
 ## Contributing
 
 Bug reports and feature requests should be submitted here as issues on GitHub https://github.com/Faithlife/sdc-portal/issues. Code contributions should be made via pull requests.

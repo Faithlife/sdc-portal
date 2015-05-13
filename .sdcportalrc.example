@@ -3,6 +3,8 @@
  * You will default to full access "AdminParty" non-auth.
  * If you want to use the sample OAuth configuration you can setup a developer
  * account and obtain a consumer key and secret at https://developer.faithlife.com
+ *
+ * IMPORTANT: Remove or replace any commented out lines in this file.
  */
 {
 /*  "auth": {
