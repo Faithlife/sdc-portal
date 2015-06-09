@@ -34,7 +34,7 @@ var UserPage = React.createClass({
 
     return (
       <App route={this.props.route}>
-        <User user={this.state.user} />
+        <User user={this.state.user} dataCenter={this.props.route.params.dataCenter} />
       </App>
     );
   }
