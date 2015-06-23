@@ -3,13 +3,24 @@ var React = require('react');
 
 var UploadKeyModal = React.createClass({
   mixins: [littlest.Mixin],
+  getInitialState: function () {
+    return {
+      errorMessage: null
+    };
+  },
   uploadKey: function () {
     var self = this;
 
     var name = self.refs.keyName.getDOMNode().value;
     var key = self.refs.publicKey.getDOMNode().value;
 
-    // TODO: handle bad user input
+    if (!key) {
+      self.setState({
+        errorMessage: "Public key is required!"
+      });
+
+      return;
+    }
 
     self.context.performAction('user:sshkey:create', {
       userId: self.props.user.login,
@@ -42,6 +53,7 @@ var UploadKeyModal = React.createClass({
             </div>
           </div>
           <div className="modal__footer">
+            <span className="modal__error">{self.state.errorMessage}</span>
             <button className="modal__action--close" onClick={self.props.closeModal}>Cancel</button>
             <button className="ssh-key__action modal__action--submit" onClick={self.uploadKey}>Upload</button>
           </div>
