@@ -410,8 +410,7 @@ pre {
 
 .modal {
   background: @white;
-  border: @grey-1 solid 1px;
-  border-radius: 5px;
+  .border-radius(5px);
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -419,12 +418,14 @@ pre {
   width: 480px;
 
   &__action {
+    margin-left: 16px;
+    padding: 8px 16px;
+
     &--close {
-      background: transparent;
-      color: @blue-4;
+      background: @grey-4;
 
       &:hover {
-        background: transparent;
+        background: @grey-5;
       }
     }
   }
@@ -459,7 +460,9 @@ pre {
   }
 
   &__header {
-    border-bottom: @grey-1 solid 1px;
+    background: @header-color;
+    .border-radius(5px 5px 0 0);
+    color: @white;
     padding: 15px;
 
     h2 {
@@ -467,12 +470,20 @@ pre {
     }
   }
 
-  &__input {
+  &__field {
     margin-top: 15px;
   }
 
-  input[type=text] {
+  &__input {
+    border: 1px solid @grey-6;
+    .border-radius(2px);
+    margin-top: 4px;
+    padding: 8px;
     width: 100%;
+
+    &:focus {
+      .box-shadow(inset 0 0 4px fade(@grey-6, 50%));
+    }
   }
 
   textarea {

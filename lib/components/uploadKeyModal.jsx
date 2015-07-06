@@ -43,19 +43,19 @@ var UploadKeyModal = React.createClass({
             <h2>Upload Key</h2>
           </div>
           <div className="modal__body">
-            <div className="modal__input">
+            <div className="modal__field">
               <label htmlFor="keyName">Key name</label>
-              <input type="text" ref="keyName" name="keyName" maxLength="50" />
+              <input className="modal__input" type="text" ref="keyName" name="keyName" maxLength="50" />
             </div>
-            <div className="modal__input">
+            <div className="modal__field">
               <label htmlFor="publicKey">Public key</label>
-              <textarea ref="publicKey" name="publicKey" />
+              <textarea className="modal__input" ref="publicKey" name="publicKey" />
             </div>
           </div>
           <div className="modal__footer">
             <span className="modal__error">{self.state.errorMessage}</span>
-            <button className="modal__action--close" onClick={self.props.closeModal}>Cancel</button>
-            <button className="ssh-key__action modal__action--submit" onClick={self.uploadKey}>Upload</button>
+            <button className="modal__action modal__action--close" onClick={self.props.closeModal}>Cancel</button>
+            <button className="modal__action modal__action--submit" onClick={self.uploadKey}>Upload</button>
           </div>
         </div>
       </div>
