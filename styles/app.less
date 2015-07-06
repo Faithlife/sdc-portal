@@ -386,6 +386,10 @@ pre {
       }
     }
 
+    &--upload {
+      margin-left: 15px;
+    }
+
     &:first-child {
       .border-top-left-radius(2px);
     }
@@ -397,6 +401,85 @@ pre {
 
   &__code {
     padding: 8px;
+  }
+
+  &__title {
+    display: inline-block;
+  }
+}
+
+.modal {
+  background: @white;
+  border: @grey-1 solid 1px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 11;
+  width: 480px;
+
+  &__action {
+    &--close {
+      background: transparent;
+      color: @blue-4;
+
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  &__background {
+    &:before{
+      content: "";
+      background: rgba(0,0,0,0.6);
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 10;
+    }
+
+    &:target {
+      &:before{
+        display: block;
+      }
+    }
+  }
+
+  &__body {
+    padding: 0px 15px;
+  }
+
+  &__error {
+    color: @red-4;
+  }
+
+  &__footer {
+    padding: 15px;
+    text-align: right;
+  }
+
+  &__header {
+    border-bottom: @grey-1 solid 1px;
+    padding: 15px;
+
+    h2 {
+      font-size: 20px;
+    }
+  }
+
+  &__input {
+    margin-top: 15px;
+  }
+
+  input[type=text] {
+    width: 100%;
+  }
+
+  textarea {
+    height: 100px;
+    max-height: 200px;
+    width: 100%;
+    resize: vertical;
   }
 }
 
