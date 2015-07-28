@@ -51,6 +51,10 @@ var Machine = React.createClass({
     return <i className="icon-attention-alt"></i>;
   },
   renderOS: function (os) {
+    if (!os) {
+      return 'Unknown';
+    }
+
     if (os === 'smartos') {
       return 'SmartOS';
     }
