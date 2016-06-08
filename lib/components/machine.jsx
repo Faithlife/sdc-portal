@@ -92,6 +92,9 @@ var Machine = React.createClass({
         <table className="machine__meta">
           <tbody>
             <tr>
+              <th>Compute Node</th><td>{this.state.machine.computeNode}</td>
+            </tr>
+            <tr>
               <th>OS</th><td>{this.renderOS(this.state.machine.os)}</td>
             </tr>
             <tr>
