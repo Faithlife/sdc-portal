@@ -28,7 +28,9 @@ var Dropdown = React.createClass({
     }, false);
   },
   toggle: function (event) {
-    event && event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
 
     this.setState({
       open: !this.state.open
