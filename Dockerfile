@@ -7,4 +7,5 @@ COPY . /src
 WORKDIR /src
 
 RUN npm install --unsafe-perm
+RUN npm install -g grunt && grunt && npm rm -g grunt
 CMD node bin/cluster
